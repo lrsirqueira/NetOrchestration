@@ -2,10 +2,4 @@
 
 Este aquivo sera um teste de um primeiro projeto
 
-Vamos ver como sera a integracao
-
-Teste
-
-Mais um Teste
-
-novo teste
+Validando o sincronismo de um ambiente total com Git
