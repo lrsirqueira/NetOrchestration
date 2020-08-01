@@ -1,0 +1,12 @@
+1 - Recebe duas informações via Input ( pop_name, action(ADD, DEL))
+2 - Get Informations
+    - regiao
+    - pe_name
+    - interface_pe
+    - vlan
+        - Da Vlan conseguirei coletar a SubInterface
+    - bloco ip
+3 - Limpar a pasta de variaveis
+4 - Criar o arquivo de variaveis
+5 - Chamar o Ansible para rodar a rotina
+6 - Salva no  banco o provisionamento

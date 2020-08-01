@@ -1,0 +1,5 @@
+configure
+{% for interface in interfaces %}
+delete interface {{ interface.name }}
+{% endfor %}
+commit

@@ -1,0 +1,15 @@
+nso_localdata
+  - blocos_ip
+    - name (TEXTO, UNIQUE)
+    - regiao (TEXTO)
+    - ips (TEXTO, LISTA de inteiros)
+
+  - pes
+    - name (TEXTO, UNIQUE)
+    - regiao (TEXTO)
+    - interface
+    
+  - pops
+    - name (TEXTO, UNIQUE)
+    - vlans (TEXTO, LISTA de inteiros)
+    - pe (TEXTO)

@@ -1,0 +1,32 @@
+será Criado  um OSS que receberá a solicitação de criação de um um serviço.. Ele aguarda um contract_id e name_pop
+Ele selecionará os dados técnicos e retornará para o BSS ( Inteface,  Vlan, IP e Router)
+
+Depois criar novas chamadas na Rest API para auditoria
+  add_serv
+  get_ips
+  get_pes
+
+Como  validar se o arquivo foi realmente criado?
+
+Porque não rolou 8 intefaces que coloquei no arquivo hosts_var??
+
+Só pode realizar o update no banco depois que o deploy for feito com sucesso
+
+Tem que criar a descrição... para isto realmente vou precisar receber os dados do contrato
+
+VOu precisar criar dois arqruivos... um de ADD e outro de DEL, assim sendo, não preciso mandar para o Método qual a ação
+
+Criar o programa para desprovisionar o serviço.
+  -> Para isto, vou precisar de mais um banco com os dados de:
+    PE_name
+      - interfaces
+      - vlan
+      - Ip Address
+
+Homologações
+  - Se enviar um dado errado...
+  - Se houver erro na comunicação do ansible com os routers
+
+quando eu envio um contrato  duplicado, ele bloqueia o banco de dados
+  
+  

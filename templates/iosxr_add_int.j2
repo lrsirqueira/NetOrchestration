@@ -1,0 +1,6 @@
+{% for interface in interfaces %}
+interface {{ interface.name }}
+ description {{ interface.description }}
+ dot1q vlan {{ interface.vlan_id }}
+ ipv4 address {{ interface.ip_address }}
+{% endfor %}
