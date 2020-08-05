@@ -5,8 +5,8 @@ from sqlalchemy import create_engine
 from json import dumps
 
 # Importar os Métodos que a API executara
-import ProvisiongServices
-import database
+from modules import ProvisiongServices
+from modules import database
 
 app = Flask(__name__)
 

@@ -1,6 +1,5 @@
 # Imports 
-import database
-import RunAnsible
+from modules import database
 import os
 import glob
 from shutil import copyfile
@@ -49,8 +48,9 @@ def add_serv(data):
     # Cada acao do Ansible sera printado, como estaremos rodando via API
     # todas as acoes serao printadas na console da API 
     # A chamada nao recebera estas saidas
-    print(RunAnsible.Run(caminho))
-    
+    '''print(RunAnsible.Run(caminho))
+    '''
+
     # Atualiza banco de dados com Vlans e IPs
     # Uma vez que o provisionamento rodou com sucesso posso atualizar o banco de dados com as informacoes coletadas
     # OBS: caso haja uma falha no provisionamento, este update nao deve ocorrer
@@ -95,8 +95,8 @@ def del_serv(contrato_data):
 
     caminho  = 'Ansible/del_int.yml'
 
-    print(RunAnsible.Run(caminho))
-    
+    '''print(RunAnsible.Run(caminho))
+    '''
 
     # Aqui vou ter que criar o o JSON
     retorno = (f'{pop_name} {pe_name} {sub_interface} {bloco_ip}')
