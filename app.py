@@ -6,7 +6,7 @@ from json import dumps
 
 # Importar os Métodos que a API executara
 import ProvisiongServices
-import Controller
+import database
 
 app = Flask(__name__)
 
@@ -21,7 +21,7 @@ def add_service():
 def get_service():
     data = request.get_json()
     contrato  = data['contrato']
-    contrato_data = Controller.GetContrato(contrato)
+    contrato_data = database.GetContrato(contrato)
     return jsonify(contrato_data), 201
 
 @app.route('/api/del_service', methods=['POST'])
@@ -29,7 +29,7 @@ def del_service():
     contrato_data = {}
     data = request.get_json()
     contrato  = data['contrato']
-    contrato_data = Controller.GetContrato(contrato)    
+    contrato_data = database.GetContrato(contrato)    
     contrato_data['contrato'] = contrato
     retorno = ProvisiongServices.del_serv(contrato_data)
     return jsonify(retorno), 201

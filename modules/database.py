@@ -1,61 +1,59 @@
-import yaml
-import csv
 import sqlite3
 import ipaddress
 
-def Save_YML_file(data,router):
-    # Cria listas que serao utilizadas
-    data_to_dict = []
-    Lista        = []
-    interfaces   = {}
-    dicionario   = {}
+def GetPe(pop_name):
+    conn = sqlite3.connect('nso_localdata.db')
+    cursor = conn.cursor()
+    cursor.execute('SELECT pe FROM pops WHERE name = ?', (pop_name,))
+    pe_name=cursor.fetchall()
+    return(pe_name[0][0])
+
+def GetPeInfo(pe_name):
+    conn = sqlite3.connect('nso_localdata.db')
+    cursor = conn.cursor()
+    cursor.execute('SELECT * FROM pes WHERE name = ?', (pe_name,))
+    pe_info=cursor.fetchall()
+    return(pe_info)
+
+def GetIp(regiao):
+    ips_list = []
+    retorno = []
+    conn = sqlite3.connect('nso_localdata.db')
+    cursor = conn.cursor()
+    cursor.execute('SELECT * FROM blocos_ip WHERE regiao = ?', (regiao,))
+    data=cursor.fetchall()
+    bloco_ip = data[0][0]
+
+    ### Selecionando o IP
+    cursor.execute('SELECT * FROM ips WHERE bloco_ip = ?', (bloco_ip,))
+    ips=cursor.fetchall()
+    if len(ips)==0:
+        ip_address = ( 0 + 1 )
+    else:
+        for ip in ips:
+            ips_list.append(int(ip[3]))
+    ips_list.sort()
+    ips_livres = list(set(range(0, 256 , 4)) - set(ips_list))
+    ip_address = (ips_livres[0] + 1 )
+
+    retorno.append(bloco_ip)
+    retorno.append(ip_address)
+    return(retorno)
+
+def GetVlan(pop_name):
+    vlans_list = []
+    conn = sqlite3.connect('nso_localdata.db')
+    cursor = conn.cursor()
+    cursor.execute('SELECT vlan_id FROM vlans WHERE pop_name = ?', (pop_name,))
+    vlans=cursor.fetchall()
+
+    for item in vlans:
+        vlans_list.append(int(item[0]))
     
-    # Cria o dicionario de interfaces
-    data_to_dict = ('name',data[0],'description',data[1],'ip_address',data[2],'vlan_id',data[3])
-    Convert = {data_to_dict[i]: data_to_dict[i + 1] for i in range(0, len(data_to_dict), 2)}
-    Lista.append(Convert)
-
-    # Cria o dicionario que sera inserido no  arquivo
-    dicionario['interfaces'] = Lista
-
-    # Define o caminho do arquivo e executa a alteração do mesmo
-    #caminho = (f'Ansible/host_vars/{router}.yml')
-    with open(f'Ansible/host_vars/{router}.yml', 'w') as file:
-        documents = yaml.dump(dicionario, file)
-    
-    return("Done")
-
-def Read_YML_file(router):
-
-    with open(r'Ansible/host_vars/R2.yml', 'w') as file:
-        Interfaces = yaml.load(file)
-        
-    for item in Interfaces['interfaces']:
-        print(item['name'])
-        print(item['description'])
-        print(item['ip_address'])
-        print(item['vlan_id'])
-        print('\n')
-    return("Done")
-
-def ListarPops():
-    print("Olá, Selecione um dos Pops abaixo baseado em seu numero ...")
-
-    # Gera a Lista Vazia
-    Pops = []
-    
-    # Abre o CSV e Gera cada linha como Lista
-    with open('ListaPops.csv', newline='') as csvfile:
-        spamreader = csv.reader(csvfile, delimiter=';')
-        for Pop in spamreader:
-            Pops.append(Pop)
-    
-    # Printa para o usuario cada Pop com seu Index
-    for index,Pop in enumerate(Pops):
-        print (index, Pops[index])
-    
-    index = input('Qual o Numero do Pop: ')
-    return(Pops[int(index)])
+    vlans_list.sort()
+    vlans_livres = list(set(range(1, 4094 + 1)) - set(vlans_list))
+    vlan_id = vlans_livres[0]
+    return(vlan_id)
 
 def GetDataDb(pop_name,acao):
     returnData = {}
@@ -63,17 +61,7 @@ def GetDataDb(pop_name,acao):
     ips_list   = []
     returnData['pop_name'] = pop_name
     returnData['acao']     = acao
-    
-    ### Parametros Iniciais e Selecionando o POP
-    conn = sqlite3.connect('nso_localdata.db')
-    cursor = conn.cursor()
-    
-    ### Selecionando as Variaveis do Banco de Dados
-    ### ----------> Obtem o PE que atende o POP
-    cursor.execute('SELECT pe FROM pops WHERE name = ?', (pop_name,))
-    data=cursor.fetchall()
-    returnData['pe_name']   = data[0][0]
-    
+
     ### ----------> Obtem os dados do PE
     cursor.execute('SELECT * FROM pes WHERE name = ?', (data[0][0],))
     data=cursor.fetchall()
@@ -91,13 +79,11 @@ def GetDataDb(pop_name,acao):
     vlans_livres = list(set(range(1, 4094 + 1)) - set(vlans_list))
     returnData['vlan_id'] = vlans_livres[0]
     
-    
     ### ----------> Obtem o Bloco IP que atende a regiao
     cursor.execute('SELECT * FROM blocos_ip WHERE regiao = ?', (data[0][1],))
     data=cursor.fetchall()
     returnData['bloco_ip'] = data[0][0]
  
-    
     ### Selecionando o IP
     cursor.execute('SELECT * FROM ips WHERE bloco_ip = ?', (data[0][0],))
     ips=cursor.fetchall()
@@ -151,9 +137,10 @@ def GetContrato(contrato):
     returnData['bloco_ip'] = (data[0][0] + str(data[0][3]) + data[0][2])
 
     # Selecionando a vlan
-    cursor.execute('SELECT vlan_id FROM vlans WHERE contrato = ?', (contrato,))
+    cursor.execute('SELECT vlan_id,pop_name FROM vlans WHERE contrato = ?', (contrato,))
     data=cursor.fetchall()
     returnData['vlan_id'] = data[0][0]
+    returnData['pop_name'] = data[0][1]
 
     # Selecionando a Interface do PE
     cursor.execute('SELECT pe_name,interface FROM interfaces WHERE contrato = ?', (contrato,))
@@ -165,3 +152,17 @@ def GetContrato(contrato):
     conn.commit()
     conn.close()
     return(returnData)
+
+def DelServdb(contrato):
+    contrato = int(contrato)
+    conn = sqlite3.connect('nso_localdata.db')
+    cursor = conn.cursor()
+    
+    cursor.execute('DELETE FROM ips WHERE contrato = ?', (contrato,))
+    cursor.execute('DELETE FROM interfaces WHERE contrato = ?', (contrato,))
+    cursor.execute('DELETE FROM vlans WHERE contrato = ?', (contrato,))
+    
+    ## Fechando Conexão ao Banco
+    conn.commit()
+    conn.close()
+    return('OK')

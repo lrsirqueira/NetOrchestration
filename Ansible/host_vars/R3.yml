@@ -1,5 +1,0 @@
-interfaces:
-- description: No_Description
-  ip_address: 100.64.1.5/30
-  name: ge-0/0/1.3
-  vlan_id: 3
