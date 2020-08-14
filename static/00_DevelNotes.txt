@@ -1,2 +1,0 @@
-Como ajustar  o /30 para dot.decimal type no address dos ios
-Tem que criar uma maneira de fazer um Loop dentro dos IPs... for ip in ip_address

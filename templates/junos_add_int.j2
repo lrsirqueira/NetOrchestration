@@ -1,7 +1,0 @@
-configure
-{% for interface in interfaces %}
-set interface {{ interface.name }} vlan-id {{ interface.vlan_id }}
-set interface {{ interface.name }} description {{ interface.description }}
-set interface {{ interface.name }} family inet address {{ interface.ip_address }}
-{% endfor %}
-commit

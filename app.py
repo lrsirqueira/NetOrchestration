@@ -1,38 +1,23 @@
-# imports
-from flask import Flask, request, jsonify
-from flask_restful import Resource, Api
-from sqlalchemy import create_engine
-from json import dumps
+# Import Geral
+from flask import Flask, request
 
-# Importar os Métodos que a API executara
-from modules import ProvisiongServices
-from modules import database
+# Imports Especificos dos Modulos
+from modules import Controller
 
 app = Flask(__name__)
 
-@app.route('/api/add_service', methods=['POST'])
-def add_service():
+@app.route('/api/add_int', methods=['POST'])
+def add_int():
     data = request.get_json()
-    
-    retorno = ProvisiongServices.add_serv(data)
-    return jsonify(retorno), 201
+    return_data = Controller.add_int(data)
 
-@app.route('/api/get_service', methods=['GET'])
-def get_service():
-    data = request.get_json()
-    contrato  = data['contrato']
-    contrato_data = database.GetContrato(contrato)
-    return jsonify(contrato_data), 201
+    return return_data
 
-@app.route('/api/del_service', methods=['POST'])
-def del_service():
-    contrato_data = {}
+@app.route('/api/del_int', methods=['POST'])
+def del_int():
     data = request.get_json()
-    contrato  = data['contrato']
-    contrato_data = database.GetContrato(contrato)    
-    contrato_data['contrato'] = contrato
-    retorno = ProvisiongServices.del_serv(contrato_data)
-    return jsonify(retorno), 201
+    return_data = Controller.del_int(data)
+    return return_data
 
 if __name__ == '__main__':
-    app.run(host= '0.0.0.0',debug=True)
+    app.run(host='0.0.0.0', debug=True)
