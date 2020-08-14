@@ -30,7 +30,7 @@ Leia Mais sobre SoT: https://blogs.gartner.com/andrew-lerner/2020/01/28/network-
 
 ### Arquitetura do programa 
 ### A API
-Foi construida utilizando Flask.
+Foi construida utilizando Flask. Leia mais sobre FLask aqui: https://flask.palletsprojects.com/en/1.1.x/
 Cada endopint importa um método do módulo Controller.
 
 ### A Controller
