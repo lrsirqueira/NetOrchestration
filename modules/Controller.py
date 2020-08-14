@@ -13,10 +13,6 @@ def add_int(data):
     # Enviando Comando ao Dispositivo
     retorno_device  = dev_conn.send_config_set(script_config.split("\n"))
 
-    # Salvando a Config
-    print("Desconectando do  Device ... ")
-    dev_conn.save()    
-    
     # Desconectando do Dispositivo
     print("Desconectando do  Device ... ")
     dev_conn.disconnect()
@@ -34,10 +30,6 @@ def del_int(data):
 
     # Enviando Comando ao Dispositivo
     retorno_device  = dev_conn.send_config_set(script_config.split("\n"))
-
-    # Salvando a Config
-    print("Desconectando do  Device ... ")
-    dev_conn.save()    
 
     # Desconectando do Dispositivo
     print("Desconectando do  Device ... ")
