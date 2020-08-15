@@ -16,7 +16,7 @@ Estes endpoints permitem adicionar ou deletar interfaces em routers Cisco IOS, I
 ```json
 {
 	"platform": "cisco_ios",
-    "interface": "eth0/1.123",
+        "interface": "eth0/1.123",
 	"description": "Cliente 01",
 	"vlan_id": 123,
 	"ip_address": "192.168.111.1 255.255.255.252",
