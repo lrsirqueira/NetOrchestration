@@ -55,4 +55,4 @@ Estamos usando a lib 'Netmiko' para realizar as conexões via SSH.
 
 Leia mais sobre Netmiko aqui: http://ktbyers.github.io/netmiko/
 
-### Ainda há uma porrada de coisas a ser feito no código, isto é só uma visão geral do que dá pra ser feito. Have Fun =)
+### Ainda há uma porrada de coisas a ser feito no código, isto é só uma visão geral. Have Fun =)
