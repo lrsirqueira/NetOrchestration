@@ -1,5 +1,5 @@
 # Imports Especificos dos Modulos
-from modules.DeviceConection import get_template, get_netmiko_conn
+from modules.DeviceConnection import get_template, get_netmiko_conn
 
 def add_int(data):
     # Gerar o Script

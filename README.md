@@ -37,7 +37,7 @@ Cada endopint importa um método do módulo Controller.
 Realiza o workflow relacionado à ação, por exemplo:
 Temos dois Métodos add_int que chamará o Método add_int dentro da Controller.
 
-Este Metodo por sua Vez chamará outros dois Métodos get_script e get_netmiko_conn do DeviceConection.py ( faltou um 'n' depois ajusto no código rsrs).
+Este Metodo por sua Vez chamará outros dois Métodos get_script e get_netmiko_conn do DeviceConnection.py 
 
 Ele primeiramente utilizará a platform e o script para gerar os comandos.
 
